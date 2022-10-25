@@ -2,25 +2,25 @@
     <div class="bg-success">
         <header class="p-2">
             <ThemeSwitcher @toggle-theme="toggleTheme" />
-            <div class="has-text-centered mt-2">
-                <img class="logo" src="../assets/logo.png" alt="">
-                <h1 class="is-size-4 has-text-white">
-                    Dev Tracker
-                </h1>
+            <div class="has-text-centered">
+                <img class="logo" src="../assets/logo.png" alt="Dev Tracker">
             </div>
+            <SideBarMenu />
         </header>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import SideBarMenu from './SideBarMenu.vue';
 import ThemeSwitcher from './ThemeSwitcher.vue';
 
 export default defineComponent({
     name: "SideBar",
     components: {
-        ThemeSwitcher
-    },
+    ThemeSwitcher,
+    SideBarMenu
+},
     methods: {
         toggleTheme(): void {
             this.$emit('toggle-theme')
@@ -33,9 +33,9 @@ export default defineComponent({
 header {
     width: 100%;
     height: 100vh;
+    overflow: auto;
 }
 .logo {
-    color: #e63946;
     width: 30%;
     margin: 0 auto;
 }

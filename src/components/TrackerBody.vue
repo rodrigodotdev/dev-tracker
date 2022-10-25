@@ -1,5 +1,5 @@
 <template>
-    <div class="p-2">
+    <div class="p-5">
         <TrackerTask v-for="(task, key) in tasks" :key="key" :task="task"/>
         <div class="has-text-centered">
             <TaskBox v-if="tasksIsEmpty">

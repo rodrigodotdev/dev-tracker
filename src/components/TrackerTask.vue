@@ -4,7 +4,7 @@
             <div class="column is-8">
                 <div class="columns is-vcentered">
                     <div class="column is-1">
-                        <font-awesome-icon icon="fa-solid fa-check" />
+                        <font-awesome-icon icon="check" />
                     </div>
                     <div class="column">
                         <p class="is-size-6">{{ task.description || 'Tarefa sem descrição.'}}</p>
@@ -14,7 +14,7 @@
             <div class="column">
                 <div class="columns is-vcentered">
                     <div class="column is-1">
-                        <font-awesome-icon icon="fa-solid fa-clock" />
+                        <font-awesome-icon icon="clock" />
                     </div>
                     <div class="column">
                         <p class="is-size-6">

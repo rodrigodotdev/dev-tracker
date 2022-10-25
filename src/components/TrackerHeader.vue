@@ -1,5 +1,5 @@
 <template>
-    <div class="box p-4">
+    <div class="box p-4 mb-0">
         <div class="columns">
             <div class="column is-8" role="form">
                 <input

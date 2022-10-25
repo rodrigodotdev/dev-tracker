@@ -4,11 +4,11 @@
             <TrackerTimerView :timeInSec="timeInSec" />
         </div>
         <button class="button is-success" @click="startTimer" :disabled="active">
-            <font-awesome-icon icon="fa-solid fa-play" />
+            <font-awesome-icon icon="play" />
             <span class="ml-2">Play</span>
         </button>
         <button class="button is-danger mr-2" @click="stopTimer" :disabled="!active">
-            <font-awesome-icon icon="fa-solid fa-stop" />
+            <font-awesome-icon icon="stop" />
             <span class="ml-2">Stop</span>
         </button>
     </div>
