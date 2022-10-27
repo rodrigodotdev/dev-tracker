@@ -16,7 +16,7 @@ export default defineComponent({
         },
     },
     computed: {
-        time() : string {
+        time(): string {
             const date = new Date(this.timeInSec * 1000)
             const hh = date.getUTCHours()
             const mm = date.getUTCMinutes()

@@ -22,7 +22,7 @@ export default defineComponent({
         TaskBox
     },
     computed: {
-        tasksIsEmpty() : boolean {
+        tasksIsEmpty(): boolean {
             return this.tasks.length === 0
         }
     },

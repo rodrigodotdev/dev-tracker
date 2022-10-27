@@ -24,7 +24,7 @@ export default defineComponent({
 		}
 	},
     computed: {
-        theme() : string {
+        theme(): string {
             return !this.darkTheme ? 'theme-dark' : 'theme-light'
         }
     },

@@ -4,12 +4,16 @@
             <TrackerTimerView :timeInSec="timeInSec" />
         </div>
         <button class="button is-success" @click="startTimer" :disabled="active">
-            <font-awesome-icon icon="play" />
-            <span class="ml-2">Play</span>
+            <span class="icon is-small">
+                <font-awesome-icon icon="play" />
+            </span>
+            <span>Play</span>
         </button>
-        <button class="button is-danger mr-2" @click="stopTimer" :disabled="!active">
-            <font-awesome-icon icon="stop" />
-            <span class="ml-2">Stop</span>
+        <button class="button is-danger" @click="stopTimer" :disabled="!active">
+            <span class="icon is-small">
+                <font-awesome-icon icon="stop" />
+            </span>
+            <span>Stop</span>
         </button>
     </div>
 </template>
@@ -32,13 +36,13 @@ export default defineComponent({
         }
     },
     methods: {
-        startTimer() : void {
+        startTimer(): void {
             this.timer = setInterval(() => {
                 this.timeInSec++
             }, 1000)
             this.active = true
         },
-        stopTimer() : void {
+        stopTimer(): void {
             clearInterval(this.timer)
             this.$emit('stop', this.timeInSec)
             this.timeInSec = 0

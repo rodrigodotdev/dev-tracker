@@ -12,7 +12,7 @@ export default defineComponent({
     name: 'ThemeSwitcherButton',
     emits: ['toggleTheme'],
     methods: {
-        toggleTheme() : void {
+        toggleTheme(): void {
             this.$emit('toggleTheme')
         }
     }
