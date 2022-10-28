@@ -63,7 +63,7 @@ export default defineComponent({
         },
     },
     mounted() {
-        const project = this.store.getters.getProjectById(this.id)
+        const project = this.store.getters.getProjectById(parseInt(this.id))
         if (project) {
             this.project = project
         } else {

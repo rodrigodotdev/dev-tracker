@@ -5,18 +5,18 @@
         </p>
         <ul class="menu-list">
             <li>
-                <router-link to="/">
-                    <font-awesome-icon icon="home" /> Home
+                <router-link class="has-text-white" to="/">
+                    <font-awesome-icon class="mr-3" icon="home" />Home
                 </router-link>
             </li>
             <li>
-                <router-link to="/tasks">
-                    <font-awesome-icon icon="tasks" /> Tasks
+                <router-link class="has-text-white" to="/tasks">
+                    <font-awesome-icon class="mr-3" icon="tasks" />Tasks
                 </router-link>
             </li>
             <li>
-                <router-link to="/projects">
-                    <font-awesome-icon icon="diagram-project" /> Projects
+                <router-link class="has-text-white" to="/projects">
+                    <font-awesome-icon class="mr-3" icon="diagram-project" />Projects
                 </router-link>
             </li>
         </ul>
@@ -34,5 +34,8 @@ export default defineComponent({
 <style scoped>
 .menu-list a.is-active {
     background-color: #00D1B2;
+}
+.menu-list a:not(.is-active):hover {
+    color: #4a4a4a !important;
 }
 </style>
