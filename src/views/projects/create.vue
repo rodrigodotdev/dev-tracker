@@ -9,7 +9,7 @@
                             <p class="subtitle is-6 has-text-grey">Create a new project</p>
                         </div>
                         <div class="buttons">
-                            <router-link class="button is-primary" to="/projects">
+                            <router-link class="button is-primary is-light" to="/projects">
                                 <span class="icon is-small">
                                     <font-awesome-icon icon="arrow-left" />
                                 </span>
@@ -32,10 +32,13 @@
                                     <textarea class="textarea" placeholder="Description" v-model="project.description"></textarea>
                                 </div>
                             </div>
-                            <div class="field is-grouped is-grouped-right">
-                                <div class="control">
-                                    <button class="button is-primary">Save</button>
-                                </div>
+                            <div class="field is-grouped is-grouped-centered">
+                                <button class="button is-primary">
+                                    <span class="icon is-small">
+                                        <font-awesome-icon icon="check" />
+                                    </span>
+                                    <span>Save</span>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -48,7 +51,7 @@
 <script lang="ts">
 import IProject from '@/interfaces/IProject'
 import { useStore } from '@/store'
-import { computed, defineComponent } from 'vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'CreateProject',

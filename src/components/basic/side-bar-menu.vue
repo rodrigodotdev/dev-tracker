@@ -11,12 +11,12 @@
             </li>
             <li>
                 <router-link to="/tasks">
-                    <font-awesome-icon icon="tasks" /> Tarefas
+                    <font-awesome-icon icon="tasks" /> Tasks
                 </router-link>
             </li>
             <li>
                 <router-link to="/projects">
-                    <font-awesome-icon icon="diagram-project" /> Projetos
+                    <font-awesome-icon icon="diagram-project" /> Projects
                 </router-link>
             </li>
         </ul>
@@ -33,6 +33,6 @@ export default defineComponent({
 
 <style scoped>
 .menu-list a.is-active {
-    background-color: #28617D;
+    background-color: #00D1B2;
 }
 </style>

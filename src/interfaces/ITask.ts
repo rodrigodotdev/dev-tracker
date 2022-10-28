@@ -1,5 +1,6 @@
 export default interface ITask {
-    timeInSec: number;
-    description: string;
-    projectId: number;
+    id: number;
+    project_id?: number;
+    name: string;
+    time_in_sec: number;
 }

@@ -1,23 +1,21 @@
 <template>
-    <section class="ml-2">
-        {{ time }}
-    </section>
+    {{ time }}
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-    name: 'TrackerTimer',
+    name: 'TimerView',
     props: {
-        timeInSec: {
+        time_in_sec: {
             type: Number,
             required: true,
         },
     },
     computed: {
         time(): string {
-            const date = new Date(this.timeInSec * 1000)
+            const date = new Date(this.time_in_sec * 1000)
             const hh = date.getUTCHours()
             const mm = date.getUTCMinutes()
             const ss = date.getSeconds()

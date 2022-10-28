@@ -3,7 +3,7 @@
         <header class="p-2">
             <ThemeSwitcher @toggle-theme="toggleTheme" />
             <div class="has-text-centered">
-                <img class="logo" src="../assets/logo.png" alt="Dev Tracker">
+                <img class="logo" src="@/assets/logo.png" alt="Dev Tracker" />
             </div>
             <SideBarMenu />
         </header>
@@ -12,8 +12,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import SideBarMenu from './SideBarMenu.vue';
-import ThemeSwitcher from './ThemeSwitcher.vue';
+import SideBarMenu from './side-bar-menu.vue';
+import ThemeSwitcher from './theme-switcher.vue';
 
 export default defineComponent({
     name: "SideBar",

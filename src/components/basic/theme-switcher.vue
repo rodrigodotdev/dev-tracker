@@ -60,10 +60,10 @@ export default defineComponent({
   background-position: center;
 }
 input:checked + .slider {
-  background-color: #28617D;
+  background-color: #00D1B2;
 }
 input:focus + .slider {
-  box-shadow: 0 0 1px #28617D;
+  box-shadow: 0 0 1px #00D1B2;
 }
 input:checked + .slider:before {
   -webkit-transform: translateX(24px);

@@ -3,7 +3,7 @@
         <div class="columns is-vcentered is-multiline">
             <div class="column is-7-tablet">
                 <div class="is-flex is-align-items-center">
-                    <div class="icon-box is-flex-shrink-0 has-text-white mr-4 is-inline-flex has-background-primary is-justify-content-center is-align-items-center">
+                    <div class="is-flex-shrink-0 has-text-white mr-4 is-inline-flex has-background-primary is-justify-content-center is-align-items-center">
                         <span class="icon is-large">
                             <font-awesome-icon icon="diagram-project" size="lg" />
                         </span>
@@ -28,11 +28,3 @@
     </section>
     <router-view />
 </template>
-
-<style scoped>
-.icon-box {
-    width: 56px;
-    height: 56px;
-    border-radius: 4px;
-}
-</style>
