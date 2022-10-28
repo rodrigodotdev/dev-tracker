@@ -1,7 +1,6 @@
 <template>
     <section class="section">
         <div class="columns is-multiline">
-            <!-- list box with edit ant remove buttons -->
             <div class="column is-4" v-for="(project, key) in projects" :key="key">
                 <div class="box is-fullheight">
                     <div class="is-flex is-align-items-center is-justify-content-space-between">
@@ -10,12 +9,12 @@
                             <p class="subtitle is-6 has-text-grey">{{ project.description }}</p>
                         </div>
                         <div class="is-flex is-flex-direction-column is-align-items-end">
-                            <button class="button is-primary is-small mb-1">
+                            <router-link class="button is-primary is-small mb-1" :to="'/projects/' + project.id + '/edit'">
                                 <span class="icon is-small">
                                     <font-awesome-icon icon="edit" />
                                 </span>
-                            </button>
-                            <button class="button is-danger is-small">
+                            </router-link>
+                            <button class="button is-danger is-small" @click="store.dispatch('deleteProject', project.id)">
                                 <span class="icon is-small">
                                     <font-awesome-icon icon="trash" />
                                 </span>
@@ -39,6 +38,7 @@ export default defineComponent({
         const projects = computed(() => store.state.projects)
 
         return {
+            store,
             projects,
         }
     },
