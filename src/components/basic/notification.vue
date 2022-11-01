@@ -1,6 +1,6 @@
 <template>
     <div class="my-notification">
-        <TransitionGroupkurtz name="slide-fade">
+        <TransitionGroup name="slide-fade">
             <article class="message" :class="type[notification.type]" v-for="(notification, key) in notifications" :key="key">
                 <div class="message-header">
                     <p>{{ notification.title }}</p>
@@ -10,7 +10,7 @@
                     {{ notification.message }}
                 </div>
             </article>
-        </TransitionGroupkurtz>
+        </TransitionGroup>
     </div>
 </template>
 
