@@ -52,6 +52,7 @@
 import IProject from '@/interfaces/IProject'
 import { useStore } from '@/store'
 import { defineComponent } from 'vue'
+import useNotify from '@/hooks/notifier'
 
 export default defineComponent({
     name: 'CreateProject',
@@ -70,14 +71,17 @@ export default defineComponent({
         save(): void {
             if (this.project.name === '') {
                 this.errors.name = 'Project name is required'
+                useNotify().error('Project name is required!')
                 return
             }
             this.store.dispatch('addProject', this.project)
+            useNotify().success('Project created successfully!')
             this.$router.push('/projects')
         },
     },
     setup() {
         const store = useStore()
+
         return {
             store,
         }

@@ -53,6 +53,7 @@
 import IProject from '@/interfaces/IProject'
 import { useStore } from '@/store'
 import { defineComponent } from 'vue'
+import useNotify from '@/hooks/notifier'
 
 export default defineComponent({
     name: 'EditProject',
@@ -85,6 +86,7 @@ export default defineComponent({
                 return
             }
             this.store.dispatch('updateProject', this.project)
+            useNotify().success('Project updated successfully!')
             this.$router.push('/projects')
         },
     },

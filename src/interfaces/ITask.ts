@@ -1,3 +1,5 @@
+import IProject from "./IProject";
+
 export default interface ITask {
     id: number;
     project_id?: number;

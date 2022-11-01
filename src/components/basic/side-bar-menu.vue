@@ -38,4 +38,7 @@ export default defineComponent({
 .menu-list a:not(.is-active):hover {
     color: #4a4a4a !important;
 }
+.menu-list a.is-active {
+    color: #fff !important;
+}
 </style>

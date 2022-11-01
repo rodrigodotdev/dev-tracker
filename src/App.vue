@@ -1,4 +1,5 @@
 <template>
+	<Notification />
 	<main class="columns is-gapless is-multiline" :class="theme">
 		<div class="column is-one-fifth side-bar">
 			<SideBar @toggleTheme="toggleTheme" />
@@ -11,13 +12,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import Notification from './components/basic/notification.vue'
 import SideBar from './components/basic/side-bar.vue'
 
 export default defineComponent({
 	name: 'App',
 	components: {
-		SideBar,
-	},
+    SideBar,
+    Notification
+},
 	data() {
 		return {
             darkTheme: true as boolean

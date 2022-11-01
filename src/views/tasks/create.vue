@@ -55,16 +55,17 @@ import Timer from "@/components/tasks/timer.vue"
 import ITask from "@/interfaces/ITask"
 import { useStore } from '@/store'
 import { computed, defineComponent } from 'vue'
+import useNotify from '@/hooks/notifier'
 
 export default defineComponent({
-    name: "TasksCreate",
+    name: 'TasksCreate',
     components: {
         Timer,
     },
     data() {
         return {
             task: {
-                name: "",
+                name: '',
                 time_in_sec: 0,
                 project_id: 0,
             } as ITask,
@@ -73,10 +74,11 @@ export default defineComponent({
     methods: {
         save(time_in_sec: number) {
             this.task.time_in_sec = time_in_sec;
-            this.task.name = this.task.name || "Task";
-            this.store.dispatch("addTask", this.task);
+            this.task.name = this.task.name || 'Task';
+            this.store.dispatch('addTask', this.task);
+            useNotify().success('Task created successfully!');
             this.task = {
-                name: "",
+                name: '',
                 time_in_sec: 0,
                 project_id: 0,
             } as ITask;

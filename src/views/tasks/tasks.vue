@@ -2,6 +2,14 @@
     <div class="columns is-multiline">
         <div class="column is-4" v-for="(task, key) in tasks" :key="key">
             <div class="box">
+                <div class="project-tag" v-if="task.project">
+                    <span class="tag is-rounded icon-text">
+                        <span class="icon">
+                            <font-awesome-icon icon="project-diagram" size="small" />
+                        </span>
+                        <span class="is-uppercase has-text-weight-bold">{{ task.project.name }}</span>
+                    </span>
+                </div>
                 <div class="is-flex is-align-items-center is-justify-content-space-between">
                     <div>
                         <div class="is-flex is-align-items-center">
@@ -17,7 +25,7 @@
                         </div>
                     </div>
                     <div class="buttons">
-                        <button class="button is-danger is-small" @click="store.dispatch('deleteTask', task.id)">
+                        <button class="button is-danger is-small" @click="deleteTask(task.id)">
                             <span class="icon is-small">
                                 <font-awesome-icon icon="trash" />
                             </span>
@@ -33,15 +41,23 @@
 import TimerView from "@/components/tasks/timer-view.vue"
 import { useStore } from '@/store'
 import { computed, defineComponent } from 'vue'
+import useNotify from '@/hooks/notifier'
 
 export default defineComponent({
     name: "Tasks",
     components: {
         TimerView,
     },
+    methods: {
+        deleteTask(id: number) {
+            this.store.dispatch('deleteTask', id)
+            useNotify().success('Task deleted successfully!')
+        }
+    },
     setup() {
         const store = useStore();
-        const tasks = computed(() => store.state.tasks);
+        const tasks = computed(() => store.getters.getTasks());
+
         return {
             store,
             tasks,
@@ -53,5 +69,13 @@ export default defineComponent({
 <style scoped>
 .icon-box {
     border-radius: 20%;
+}
+.box {
+    position: relative;
+}
+.project-tag {
+    position: absolute;
+    left: 12px;
+    top: -12px
 }
 </style>

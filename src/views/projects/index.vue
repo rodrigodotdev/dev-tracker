@@ -9,7 +9,7 @@
                         </span>
                     </div>
                     <div>
-                        <h2 class="title is-4 has-text-primary">Projectss</h2>
+                        <h2 class="title is-4 has-text-primary">Projects</h2>
                         <p class="subtitle is-6 has-text-grey">Manage your projects</p>
                     </div>
                 </div>

@@ -1,3 +1,4 @@
+import INotification, { NotificationType } from "@/interfaces/INotification";
 import IProject from "@/interfaces/IProject";
 import ITask from "@/interfaces/ITask";
 import { InjectionKey } from "vue";
@@ -6,6 +7,7 @@ import { createStore, Store, useStore as baseUseStore } from "vuex";
 interface state {
     projects: IProject[];
     tasks: ITask[];
+    notifications: INotification[];
 }
 
 export const key: InjectionKey<Store<state>> = Symbol();
@@ -50,6 +52,7 @@ export const store = createStore<state>({
                 project_id: 2,
             }
         ],
+        notifications: [],
     },
     mutations: {
         addProject(state, project) {
@@ -58,19 +61,25 @@ export const store = createStore<state>({
         addTask(state, task) {
             state.tasks.push(task);
         },
+        addNotification(state, notification) {
+            state.notifications.push(notification);
+
+            setTimeout(() => {
+                state.notifications = state.notifications.filter((n) => n.id !== notification.id);
+            } , notification.timeout);
+        },
         deleteProject(state, id) {
             state.projects = state.projects.filter(project => project.id !== id);
         },
         deleteTask(state, id) {
             state.tasks = state.tasks.filter(task => task.id !== id);
         },
+        deleteNotification(state, id) {
+            state.notifications = state.notifications.filter(notification => notification.id !== id);
+        },
         editProject(state, project) {
             const index = state.projects.findIndex(p => p.id === project.id);
             state.projects[index] = project;
-        },
-        editTask(state, task) {
-            const index = state.tasks.findIndex(t => t.id === task.id);
-            state.tasks[index] = task;
         },
     },
     actions: {
@@ -82,29 +91,37 @@ export const store = createStore<state>({
             task.id = store.state.tasks.length + 1;
             commit("addTask", task);
         },
+        addNotification({ commit }, notification) {
+            notification.id = store.state.notifications.length + 1;
+            notification.timeout = notification.timeout || 5000;
+            commit("addNotification", notification);
+        },
         deleteProject({ commit }, id) {
             commit("deleteProject", id);
         },
         deleteTask({ commit }, id) {
             commit("deleteTask", id);
         },
+        deleteNotification({ commit }, id) {
+            commit("deleteNotification", id);
+        },
         editProject({ commit }, project) {
             commit("editProject", project);
-        },
-        editTask({ commit }, task) {
-            commit("editTask", task);
         },
     },
     getters: {
         getProjectById: (state) => (id: number) => {
             return state.projects.find(project => project.id === id);
         },
-        getTaskById: (state) => (id: number) => {
-            return state.tasks.find(task => task.id === id);
-        },
-        getTasksByProjectId: (state) => (id: number) => {
-            return state.tasks.filter(task => task.project_id === id);
-        },
+        getTasks: (state) => () => {
+            return state.tasks.map(task => {
+                const project = state.projects.find(project => project.id === task.project_id);
+                return {
+                    ...task,
+                    project,
+                };
+            });
+        }
     },
 });
 

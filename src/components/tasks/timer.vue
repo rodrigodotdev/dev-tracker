@@ -23,6 +23,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import TimerView from './timer-view.vue';
+import useNotify from '@/hooks/notifier'
 
 export default defineComponent({
     name: "Timer",
@@ -43,6 +44,7 @@ export default defineComponent({
                 return;
             }
             this.isRunning = true;
+            useNotify().info('A task has been started!');
             this.timer = setInterval(() => {
                 this.time_in_sec++;
             }, 1000);
