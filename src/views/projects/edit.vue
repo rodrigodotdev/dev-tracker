@@ -64,10 +64,11 @@ export default defineComponent({
         },
     },
     mounted() {
-        const project = this.store.getters.getProjectById(parseInt(this.id))
+        const project = this.store.getters.project(parseInt(this.id))
         if (project) {
             this.project = project
         } else {
+            this.notify.error('Project not found')
             this.$router.push('/projects')
         }
     },
@@ -86,14 +87,21 @@ export default defineComponent({
                 return
             }
             this.store.dispatch('updateProject', this.project)
-            useNotify().success('Project updated successfully!')
-            this.$router.push('/projects')
+                .then(() => {
+                    this.notify.success('Project updated successfully')
+                    this.$router.push('/projects')
+                }).catch((error) => {
+                    this.notify.error(error.message)
+                })
         },
     },
     setup() {
         const store = useStore()
+        const notify = useNotify()
+
         return {
             store,
+            notify
         }
     },
 })

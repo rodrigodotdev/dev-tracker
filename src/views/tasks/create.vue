@@ -56,6 +56,7 @@ import ITask from "@/interfaces/ITask"
 import { useStore } from '@/store'
 import { computed, defineComponent } from 'vue'
 import useNotify from '@/hooks/notifier'
+import IProject from "@/interfaces/IProject"
 
 export default defineComponent({
     name: 'TasksCreate',
@@ -69,28 +70,39 @@ export default defineComponent({
                 time_in_sec: 0,
                 project_id: 0,
             } as ITask,
-        };
+        }
     },
     methods: {
         save(time_in_sec: number) {
-            this.task.time_in_sec = time_in_sec;
-            this.task.name = this.task.name || 'Task';
-            this.store.dispatch('addTask', this.task);
-            useNotify().success('Task created successfully!');
-            this.task = {
-                name: '',
-                time_in_sec: 0,
-                project_id: 0,
-            } as ITask;
+            this.task.time_in_sec = time_in_sec
+            this.task.name = this.task.name || 'Task'
+            
+            this.store.dispatch('addTask', this.task)
+                .then(() => {
+                    this.notify.success('Task created successfully')
+                    this.task = {
+                        name: '',
+                        time_in_sec: 0,
+                        project_id: 0,
+                    } as ITask
+                }).catch((error) => {
+                    this.notify.error(error.message)
+                })
         },
     },
     setup() {
-        const store = useStore();
-        const projects = computed(() => store.state.projects);
+        const store = useStore()
+        const notify = useNotify()
+
+        store.dispatch('fetchProjects')
+
+        const projects = computed(() => store.getters.projects as IProject[])
+
         return {
             store,
-            projects,
-        };
+            notify,
+            projects
+        }
     },
 })
 </script>

@@ -5,7 +5,7 @@
                 <div class="project-tag" v-if="task.project">
                     <span class="tag is-rounded icon-text">
                         <span class="icon">
-                            <font-awesome-icon icon="project-diagram" size="small" />
+                            <font-awesome-icon icon="project-diagram" />
                         </span>
                         <span class="is-uppercase has-text-weight-bold">{{ task.project.name }}</span>
                     </span>
@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="buttons">
-                        <button class="button is-danger is-small" @click="deleteTask(task.id)">
+                        <button class="button is-danger is-small" @click="removeTask(task)">
                             <span class="icon is-small">
                                 <font-awesome-icon icon="trash" />
                             </span>
@@ -42,6 +42,7 @@ import TimerView from "@/components/tasks/timer-view.vue"
 import { useStore } from '@/store'
 import { computed, defineComponent } from 'vue'
 import useNotify from '@/hooks/notifier'
+import ITask from "@/interfaces/ITask"
 
 export default defineComponent({
     name: "Tasks",
@@ -49,19 +50,29 @@ export default defineComponent({
         TimerView,
     },
     methods: {
-        deleteTask(id: number) {
-            this.store.dispatch('deleteTask', id)
-            useNotify().success('Task deleted successfully!')
+        removeTask(task: ITask) {
+            this.store.dispatch('removeTask', task)
+                .then(() => {
+                    this.notify.success('Task removed successfully')
+                }).catch((error) => {
+                    this.notify.error(error.message)
+                })
         }
     },
     setup() {
-        const store = useStore();
-        const tasks = computed(() => store.getters.getTasks());
+        const store = useStore()
+        const notify = useNotify()
+
+        store.dispatch('fetchTasks')
+        store.dispatch('fetchProjects')
+
+        const tasks = computed(() => store.getters.tasks as ITask[])
 
         return {
             store,
-            tasks,
-        };
+            notify,
+            tasks
+        }
     },
 })
 </script>

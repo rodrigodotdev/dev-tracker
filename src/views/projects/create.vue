@@ -75,15 +75,21 @@ export default defineComponent({
                 return
             }
             this.store.dispatch('addProject', this.project)
-            useNotify().success('Project created successfully!')
-            this.$router.push('/projects')
+                .then(() => {
+                    this.notify.success('Project created successfully!')
+                    this.$router.push('/projects')
+                }).catch((error) => {
+                    this.notify.error(error.message)
+                })
         },
     },
     setup() {
         const store = useStore()
+        const notify = useNotify()
 
         return {
             store,
+            notify
         }
     },
 })

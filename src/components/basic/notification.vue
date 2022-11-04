@@ -4,7 +4,7 @@
             <article class="message" :class="type[notification.type]" v-for="(notification, key) in notifications" :key="key">
                 <div class="message-header">
                     <p>{{ notification.title }}</p>
-                    <button class="delete" aria-label="delete" @click="store.dispatch('deleteNotification', notification.id)"></button>
+                    <button class="delete" aria-label="delete" @click="store.dispatch('removeNotification', notification.id)"></button>
                 </div>
                 <div class="message-body">
                     {{ notification.message }}
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { NotificationType } from "@/interfaces/INotification";
+import INotification, { NotificationType } from "@/interfaces/INotification";
 import { useStore } from '@/store'
 import { computed, defineComponent } from 'vue'
 
@@ -33,7 +33,7 @@ export default defineComponent({
     },
     setup() {
         const store = useStore()
-        const notifications = computed(() => store.state.notifications)
+        const notifications = computed(() => store.getters.notifications as INotification[])
 
         return {
             store,

@@ -14,7 +14,7 @@
                                     <font-awesome-icon icon="edit" />
                                 </span>
                             </router-link>
-                            <button class="button is-danger is-small" @click="deleteProject(project.id)">
+                            <button class="button is-danger is-small" @click="removeProject(project)">
                                 <span class="icon is-small">
                                     <font-awesome-icon icon="trash" />
                                 </span>
@@ -31,22 +31,32 @@
 import { useStore } from '@/store'
 import { computed, defineComponent } from 'vue'
 import useNotify from '@/hooks/notifier'
+import IProject from '@/interfaces/IProject'
 
 export default defineComponent({
     name: 'Projects',
     methods: {
-        deleteProject(id: number) {
-            this.store.dispatch('deleteProject', id)
-            useNotify().success('Project deleted successfully!')
+        removeProject(project: IProject) {
+            this.store.dispatch('removeProject', project)
+                .then(() => {
+                    this.notify.success('Project removed successfully')
+                }).catch((error) => {
+                    this.notify.error(error.message)
+                })
         }
     },
     setup() {
         const store = useStore()
-        const projects = computed(() => store.state.projects)
+        const notify = useNotify()
+
+        store.dispatch('fetchProjects')
+
+        const projects = computed(() => store.getters.projects as IProject[])
 
         return {
             store,
-            projects,
+            notify,
+            projects
         }
     },
 })
