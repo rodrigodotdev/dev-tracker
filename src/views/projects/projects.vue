@@ -27,41 +27,6 @@
     </section>
 </template>
 
-<!-- <script lang="ts">
-import { useStore } from '@/store'
-import { computed, defineComponent } from 'vue'
-import useNotify from '@/hooks/notifier'
-import IProject from '@/interfaces/IProject'
-
-export default defineComponent({
-    name: 'Projects',
-    methods: {
-        removeProject(project: IProject) {
-            this.store.dispatch('removeProject', project)
-                .then(() => {
-                    this.notify.success('Project removed successfully')
-                }).catch((error) => {
-                    this.notify.error(error.message)
-                })
-        }
-    },
-    setup() {
-        const store = useStore()
-        const notify = useNotify()
-
-        store.dispatch('fetchProjects')
-
-        const projects = computed(() => store.getters.projects as IProject[])
-
-        return {
-            store,
-            notify,
-            projects
-        }
-    },
-})
-</script> -->
-
 <script lang="ts" setup>
 import { useStore } from '@/store'
 import { computed } from 'vue'

@@ -48,64 +48,6 @@
     </section>
 </template>
 
-<!-- <script lang="ts">
-import IProject from '@/interfaces/IProject'
-import { useStore } from '@/store'
-import { defineComponent } from 'vue'
-import useNotify from '@/hooks/notifier'
-
-export default defineComponent({
-    name: 'EditProject',
-    props: {
-        id: {
-            type: String,
-            required: true,
-        },
-    },
-    mounted() {
-        const project = this.store.getters.project(parseInt(this.id))
-        if (project) {
-            this.project = project
-        } else {
-            this.notify.error('Project not found')
-            this.$router.push('/projects')
-        }
-    },
-    data() {
-        return {
-            project: {} as IProject,
-            errors: {
-                name: '' as string,
-            },
-        }
-    },
-    methods: {
-        save(): void {
-            if (this.project.name === '') {
-                this.errors.name = 'Project name is required'
-                return
-            }
-            this.store.dispatch('updateProject', this.project)
-                .then(() => {
-                    this.notify.success('Project updated successfully')
-                    this.$router.push('/projects')
-                }).catch((error) => {
-                    this.notify.error(error.message)
-                })
-        },
-    },
-    setup() {
-        const store = useStore()
-        const notify = useNotify()
-
-        return {
-            store,
-            notify
-        }
-    },
-})
-</script> -->
-
 <script lang="ts" setup>
 import IProject from '@/interfaces/IProject'
 import { useStore } from '@/store'
