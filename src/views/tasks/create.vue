@@ -50,59 +50,33 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import Timer from "@/components/tasks/timer.vue"
 import ITask from "@/interfaces/ITask"
 import { useStore } from '@/store'
-import { computed, defineComponent } from 'vue'
 import useNotify from '@/hooks/notifier'
 import IProject from "@/interfaces/IProject"
+import { computed, ref } from "vue"
 
-export default defineComponent({
-    name: 'TasksCreate',
-    components: {
-        Timer,
-    },
-    data() {
-        return {
-            task: {
-                name: '',
-                time_in_sec: 0,
-                project_id: 0,
-            } as ITask,
-        }
-    },
-    methods: {
-        save(time_in_sec: number) {
-            this.task.time_in_sec = time_in_sec
-            this.task.name = this.task.name || 'Task'
-            
-            this.store.dispatch('addTask', this.task)
-                .then(() => {
-                    this.notify.success('Task created successfully')
-                    this.task = {
-                        name: '',
-                        time_in_sec: 0,
-                        project_id: 0,
-                    } as ITask
-                }).catch((error) => {
-                    this.notify.error(error.message)
-                })
-        },
-    },
-    setup() {
-        const store = useStore()
-        const notify = useNotify()
+const store = useStore()
+const notify = useNotify()
 
-        store.dispatch('fetchProjects')
+store.dispatch('fetchProjects')
 
-        const projects = computed(() => store.getters.projects as IProject[])
+const projects = computed<IProject[]>(() => store.getters.projects)
 
-        return {
-            store,
-            notify,
-            projects
-        }
-    },
-})
+const task = ref<ITask>({} as ITask)
+
+const save = (time_in_sec: number): void => {
+    task.value.time_in_sec = time_in_sec
+    task.value.name = task.value.name || 'Unnamed Task'
+    
+    store.dispatch('addTask', task)
+        .then(() => {
+            notify.success('Task created successfully')
+            task.value = {} as ITask
+        }).catch((error) => {
+            notify.error(error.message)
+        })
+}
 </script>

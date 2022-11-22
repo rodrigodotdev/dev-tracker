@@ -37,44 +37,29 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import TimerView from "@/components/tasks/timer-view.vue"
 import { useStore } from '@/store'
-import { computed, defineComponent } from 'vue'
+import { computed } from 'vue'
 import useNotify from '@/hooks/notifier'
 import ITask from "@/interfaces/ITask"
 
-export default defineComponent({
-    name: "Tasks",
-    components: {
-        TimerView,
-    },
-    methods: {
-        removeTask(task: ITask) {
-            this.store.dispatch('removeTask', task)
-                .then(() => {
-                    this.notify.success('Task removed successfully')
-                }).catch((error) => {
-                    this.notify.error(error.message)
-                })
-        }
-    },
-    setup() {
-        const store = useStore()
-        const notify = useNotify()
+const store = useStore()
+const notify = useNotify()
 
-        store.dispatch('fetchTasks')
-        store.dispatch('fetchProjects')
+store.dispatch('fetchTasks')
+store.dispatch('fetchProjects')
 
-        const tasks = computed(() => store.getters.tasks as ITask[])
+const tasks = computed<ITask[]>(() => store.getters.tasks)
 
-        return {
-            store,
-            notify,
-            tasks
-        }
-    },
-})
+const removeTask = (task: ITask): void => {
+    store.dispatch('removeTask', task)
+        .then(() => {
+            notify.success('Task removed successfully')
+        }).catch((error) => {
+            notify.error(error.message)
+        })
+}
 </script>
 
 <style scoped>

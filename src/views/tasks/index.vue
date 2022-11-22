@@ -36,23 +36,12 @@
     </section>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
+import { ref } from 'vue'
 import TasksCreate from './create.vue'
 import Tasks from './tasks.vue'
 
-export default defineComponent({
-    name: "TasksIndex",
-    components: {
-        TasksCreate,
-        Tasks,
-    },
-    data() {
-        return {
-            showCreateTask: false,
-        };
-    },
-})
+const showCreateTask = ref<boolean>(false)
 </script>
 
 <style scoped>

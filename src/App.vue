@@ -10,33 +10,18 @@
 	</main>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
+import { computed, ref } from 'vue'
 import Notification from './components/basic/notification.vue'
 import SideBar from './components/basic/side-bar.vue'
 
-export default defineComponent({
-	name: 'App',
-	components: {
-    SideBar,
-    Notification
-},
-	data() {
-		return {
-            darkTheme: true as boolean
-		}
-	},
-    computed: {
-        theme(): string {
-            return !this.darkTheme ? 'theme-dark' : 'theme-light'
-        }
-    },
-	methods: {
-		toggleTheme(): void {
-			this.darkTheme = !this.darkTheme
-		}
-	},
-})
+const darkTheme = ref<boolean>(true)
+
+const theme = computed<string>(() => !darkTheme.value ? 'theme-dark' : 'theme-light')
+
+const toggleTheme = (): void => {
+	darkTheme.value = !darkTheme.value
+}
 </script>
 
 <style>

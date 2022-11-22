@@ -22,9 +22,9 @@
                             <div class="field">
                                 <label class="label">Project Name</label>
                                 <div class="control">
-                                    <input class="input" type="text" placeholder="Project Name" v-model="project.name" :class="{ 'is-danger': errors.name }" />
+                                    <input class="input" type="text" placeholder="Project Name" v-model="project.name" :class="{ 'is-danger': error.name }" />
                                 </div>
-                                <p class="help is-danger" v-if="errors.name">{{ errors.name }}</p>
+                                <p class="help is-danger" v-if="error.name">{{ error.name }}</p>
                             </div>
                             <div class="field">
                                 <label class="label">Description</label>
@@ -48,49 +48,31 @@
     </section>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import IProject from '@/interfaces/IProject'
 import { useStore } from '@/store'
-import { defineComponent } from 'vue'
+import { ref } from 'vue'
 import useNotify from '@/hooks/notifier'
+import { useRouter } from 'vue-router';
 
-export default defineComponent({
-    name: 'CreateProject',
-    data() {
-        return {
-            project: {
-                name: '',
-                description: '',
-            } as IProject,
-            errors: {
-                name: '' as string,
-            },
-        }
-    },
-    methods: {
-        save(): void {
-            if (this.project.name === '') {
-                this.errors.name = 'Project name is required'
-                useNotify().error('Project name is required!')
-                return
-            }
-            this.store.dispatch('addProject', this.project)
-                .then(() => {
-                    this.notify.success('Project created successfully!')
-                    this.$router.push('/projects')
-                }).catch((error) => {
-                    this.notify.error(error.message)
-                })
-        },
-    },
-    setup() {
-        const store = useStore()
-        const notify = useNotify()
+const store = useStore()
+const notify = useNotify()
+const router = useRouter()
 
-        return {
-            store,
-            notify
-        }
-    },
-})
+const project = ref<IProject>({} as IProject)
+const error = ref<{ name: string }>({ name: '' })
+
+const save = (): void => {
+    if (project.value.name === '') {
+        error.value.name = 'Project name is required'
+        return
+    }
+    store.dispatch('addProject', project)
+        .then(() => {
+            notify.success('Project created successfully!')
+            router.push('/projects')
+        }).catch((error) => {
+            notify.error(error.message)
+        })
+}
 </script>

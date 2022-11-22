@@ -1,5 +1,4 @@
 <template>
-    <!-- edit form -->
     <section class="section">
         <div class="columns is-centered">
             <div class="column is-6">
@@ -23,9 +22,9 @@
                             <div class="field">
                                 <label class="label">Project Name</label>
                                 <div class="control">
-                                    <input class="input" type="text" placeholder="Project Name" v-model="project.name" :class="{ 'is-danger': errors.name }" />
+                                    <input class="input" type="text" placeholder="Project Name" v-model="project.name" :class="{ 'is-danger': error.name }" />
                                 </div>
-                                <p class="help is-danger" v-if="errors.name">{{ errors.name }}</p>
+                                <p class="help is-danger" v-if="error.name">{{ error.name }}</p>
                             </div>
                             <div class="field">
                                 <label class="label">Description</label>
@@ -49,7 +48,7 @@
     </section>
 </template>
 
-<script lang="ts">
+<!-- <script lang="ts">
 import IProject from '@/interfaces/IProject'
 import { useStore } from '@/store'
 import { defineComponent } from 'vue'
@@ -105,4 +104,48 @@ export default defineComponent({
         }
     },
 })
+</script> -->
+
+<script lang="ts" setup>
+import IProject from '@/interfaces/IProject'
+import { useStore } from '@/store'
+import { ref } from 'vue'
+import useNotify from '@/hooks/notifier'
+import { useRoute, useRouter } from 'vue-router';
+
+const store = useStore()
+const notify = useNotify()
+const router = useRouter()
+const route = useRoute()
+
+const project = ref<IProject>({} as IProject)
+
+store.dispatch('fetchProjects').then(() => {
+    project.value = store.getters.project(parseInt(route.params.id as string))
+    if (!project.value) {
+        notify.error('Project not found')
+        router.push('/projects')
+    }
+})
+
+const error = ref<{ name: string }>({ name: '' })
+
+if (!project.value) {
+    notify.error('Project not found')
+    router.push('/projects')
+}
+
+const save = () => {
+    if (project.value.name === '') {
+        error.value.name = 'Project name is required'
+        return
+    }
+    store.dispatch('updateProject', project.value)
+        .then(() => {
+            notify.success('Project updated successfully')
+            router.push('/projects')
+        }).catch((error) => {
+            notify.error(error.message)
+        })
+}
 </script>
